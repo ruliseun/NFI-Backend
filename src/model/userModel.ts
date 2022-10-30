@@ -9,7 +9,7 @@ interface UserAttribute {
     gender: string;
     phone: string; 
     address: string;
-    accountBalance: string;
+    accountBalance?: string;
     password: string
 }
 

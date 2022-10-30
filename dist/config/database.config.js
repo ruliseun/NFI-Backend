@@ -6,4 +6,9 @@ const db = new sequelize_1.Sequelize('app', '', '', {
     dialect: "sqlite",
     logging: false
 });
-exports.default = db;
+const testDb = new sequelize_1.Sequelize('app', '', '', {
+    storage: "./database.sqlite",
+    dialect: "sqlite",
+    logging: false
+});
+exports.default = process.env.PROD_ENV === 'test' ? testDb : db;

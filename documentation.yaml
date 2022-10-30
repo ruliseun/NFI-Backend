@@ -1,0 +1,251 @@
+openapi: 3.0.0
+info:
+  title: NFI Backend Task
+  description: A backend assessment task
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://127.0.0.1:3000
+  description: APIs for Users, transactions
+  variables: {}
+paths:
+  /users/register:
+   post:
+      tags:
+      - User
+      summary: Register a User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: "Register a User"
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisteraUserRequest'
+              - example:
+                  firstname: Oluwaseun
+                  lastname: Akinruli
+                  email: ruliseun@gmail.com
+                  gender: M
+                  phone: '08143365108'
+                  address: 'Lagos'
+                  password: '1234567890'
+                  confirmPassword: '1234567890'
+            example:
+                firstname: Oluwaseun
+                lastname: Akinruli
+                email: ruliseun@gmail.com
+                gender: M
+                phone: '08143365108'
+                address: 'Lagos'
+                password: '1234567890'
+                confirmPassword: '1234567890'
+        required: true
+      responses:
+        '201':
+          description: 'Register a User'
+          headers: {}
+      deprecated: false
+      security: []
+  /users/login:
+    post:
+      tags:
+      - User
+      summary: Login User
+      operationId: LoginUser
+      parameters: []
+      requestBody:
+        description: 'Login user'
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginUserRequest'
+              - example:
+                  email: ruliseun@gmail.com
+                  password: '1234567890'
+            example:
+              email: ruliseun@gmail.com
+              password: '1234567890'
+        required: true
+      responses:
+        '200':
+          description: 'Login user'
+          headers: {}
+      deprecated: false
+      security: []
+  /fund/creditAccount:
+    post:
+      tags:
+      - User
+      summary: Fund Wallet
+      operationId: FundWallet
+      parameters: []
+      requestBody:
+        description: 'Fund wallet'
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/FundWalletRequest'
+              - example:
+                  Amount: 1000
+            example:
+              Amount: 1000
+        required: true
+      responses:
+        '200':
+          description: 'Fund Wallet'
+          headers: {}
+      deprecated: false
+      security: []
+  /fund/deposit:
+    post:
+      tags:
+      - User
+      summary: Deposit
+      operationId: Deposit
+      parameters: []
+      requestBody:
+        description: 'Deposit'
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/Deposit'
+              - example:
+                  Amount: 1000
+                  userId: 494972aa-2770-446a-b7e4-c83caaca15b6
+            example:
+              Amount: 1000
+              userId: 494972aa-2770-446a-b7e4-c83caaca15b6
+        required: true
+      responses:
+        '200':
+          description: 'Deposit'
+          headers: {}
+      deprecated: false
+      security: []
+  /fund/withdraw:
+    post:
+      tags:
+      - User
+      summary: Withdraw
+      operationId: Withdraw
+      parameters: []
+      requestBody:
+        description: 'Withdraw'
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/Withdraw'
+              - example:
+                  Amount: 1000
+            example:
+              Amount: 1000
+        required: true
+      responses:
+        '200':
+          description: 'Withdraw'
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    RegisterUserRequest:
+      title: RegisterUserRequest
+      required:
+      - firstname
+      - lastname
+      - email
+      - gender
+      - phone
+      - addrress
+      - password
+      - confirmPassword
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        phone:
+          type: string
+        address:
+          type: string
+        password:
+          type: string
+        confirmPassword:
+          type: string
+      example:
+        firstname: Oluwaseun
+        lastname: Akinruli
+        email: ruliseun@gmail.com
+        gender: M
+        phone: '08143365108'
+        address: 'Lagos'
+        password: '1234567890'
+        confirmPassword: '1234567890'
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: ruliseun@gmail.com
+        password: '1234567890'
+    FundWalletRequest:
+      title: FundWalletRequest
+      required:
+      - Amount
+      type: object
+      properties:
+        amount:
+          type: string
+      example:
+        amount: 1000
+    DepositRequest:
+      title: DepositRequest
+      required:
+      - Amount
+      - userId
+      type: object
+      properties:
+        amount:
+          type: string
+        userId:
+          type: string
+      example:
+        amount: 1000
+        userId: 494972aa-2770-446a-b7e4-c83caaca15b6
+    WithdrawRequest:
+      title: WithdrawRequest
+      required:
+      - Amount
+      type: object
+      properties:
+        amount:
+          type: string
+      example:
+        amount: 1000
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: User
+  
+  

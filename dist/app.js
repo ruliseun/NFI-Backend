@@ -9,7 +9,11 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const index_1 = __importDefault(require("./routes/index"));
 const users_1 = __importDefault(require("./routes/users"));
+const transactions_1 = __importDefault(require("./routes/transactions"));
 const database_config_1 = __importDefault(require("./config/database.config"));
+const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
+const yamljs_1 = __importDefault(require("yamljs"));
+const swaggerDocument = yamljs_1.default.load('./documentation.yaml');
 database_config_1.default.sync().then(() => {
     console.log('Database Connected Successfully');
 }).catch(err => {
@@ -23,4 +27,11 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.use('/', index_1.default);
 app.use('/users', users_1.default);
+app.use('/fund', transactions_1.default);
+app.use('/api/doc', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerDocument));
+app.use(function (err, req, res, next) {
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.status(err.status || 500);
+});
 exports.default = app;
